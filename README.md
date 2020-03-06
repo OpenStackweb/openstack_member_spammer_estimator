@@ -1,16 +1,19 @@
 ## Dependencies 
 
-sudo apt update
-sudo apt install python3-pip python3-dev build-essential libssl-dev libffi-dev python3-setuptools
+````bas
+$ sudo apt update
+$ sudo apt install python3-pip python3-dev build-essential libssl-dev libffi-dev python3-setuptools python3-venv 
+libmysqlclient-dev
+````
 
-sudo apt install python3-venv
 
 ## Virtual Env
 
-python3.6 -m venv env
+````bash
+$ python3.6 -m venv env
 
-source env/bin/activate
+$ source env/bin/activate
 
-pip install -r requirements.txt 
+$ pip install -r requirements.txt
 
-pip freeze > requirements.txt
+```` 
