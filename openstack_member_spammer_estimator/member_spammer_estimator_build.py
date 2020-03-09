@@ -37,13 +37,14 @@ class EstimatorBuilder(object):
     INSERT_SQL_HAM = """INSERT INTO users_spam_estimator_feed
 (created_at, updated_at, first_name, last_name, email, bio, spam_type)
 SELECT UTC_TIMESTAMP(), UTC_TIMESTAMP() ,first_name, last_name, email, bio , spam_type FROM users 
-WHERE users.spam_type = 'Ham' LIMIT 0, 300;"""
+WHERE users.spam_type = 'Ham' LIMIT 0, 500;"""
 
-    def __init__(self, host, user, password, db):
-        self.host = host
-        self.user = user
-        self.password = password
-        self.db = db
+    def __init__(self, filename , db_host, db_user, db_user_password, db_name):
+        self.db_host = db_host
+        self.db_user = db_user
+        self.db_user_password = db_user_password
+        self.db_name = db_name
+        self.filename = filename
 
     def populate(self, file):
         db = None
@@ -52,7 +53,7 @@ WHERE users.spam_type = 'Ham' LIMIT 0, 300;"""
             with open(file, 'r') as f:
                 loaded_json = json.load(f)
 
-            db = MySQLdb.connect(self.host, self.user, self.password, self.db)
+            db = MySQLdb.connect(self.db_host, self.db_user, self.db_user_password, self.db_name)
             cursor = db.cursor()
             now = datetime.datetime.utcnow()
             cursor.execute(EstimatorBuilder.TRUNCATE_SQL)
@@ -92,7 +93,7 @@ WHERE users.spam_type = 'Ham' LIMIT 0, 300;"""
         cursor = None
         db = None
         try:
-            db = MySQLdb.connect(self.host, self.user, self.password, self.db)
+            db = MySQLdb.connect(self.db_host, self.db_user, self.db_user_password, self.db_name)
             # Open database connection
             # prepare a cursor object using cursor() method
             cursor = db.cursor()
@@ -140,9 +141,7 @@ WHERE users.spam_type = 'Ham' LIMIT 0, 300;"""
 
             classifier.fit(trainData, labels)
 
-            filename = 'member_classifier.pickle'
-            print("writing model to file %s" % (filename))
-            pickle.dump(classifier, open(filename, 'wb'))
+            pickle.dump(classifier, open(self.filename, 'wb'))
             db.commit()
 
         except Exception as e:

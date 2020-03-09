@@ -34,11 +34,11 @@ class EstimatorClassifier(object):
         "SELECT id, first_name, last_name, email, bio FROM users WHERE spam_type = 'None' AND bio IS NOT NULL AND bio <> '';")
     UPDATE_SQL = """UPDATE users set spam_type = %s, active = %s WHERE id = %s"""
 
-    def __init__(self, host, user, password, db):
-        self.host = host
-        self.user = user
-        self.password = password
-        self.db = db
+    def __init__(self, db_host, db_user, db_user_password, db_name):
+        self.db_host = db_host
+        self.db_user = db_user
+        self.db_user_password = db_user_password
+        self.db_name = db_name
 
     def classify(self, model_file):
         db = None
@@ -46,7 +46,7 @@ class EstimatorClassifier(object):
         res = []
         try:
             # Open database connection
-            db = MySQLdb.connect(self.host, self.user, self.password, self.db)
+            db = MySQLdb.connect(self.db_host, self.db_user, self.db_user_password, self.db_name)
             # prepare a cursor object using cursor() method
             cursor = db.cursor()
             df = sql.read_sql(EstimatorClassifier.SELECT_SQL, db)
