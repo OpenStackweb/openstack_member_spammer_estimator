@@ -93,7 +93,7 @@ WHERE users.spam_type = 'Ham' LIMIT 0, 500;"""
         cursor = None
         db = None
         try:
-            db = MySQLdb.connect(self.db_host, self.db_user, self.db_user_password, self.db_name)
+            db = MySQLdb.connect(self.db_host, self.db_user, self.db_user_password, self.db_name, charset='utf8')
             # Open database connection
             # prepare a cursor object using cursor() method
             cursor = db.cursor()

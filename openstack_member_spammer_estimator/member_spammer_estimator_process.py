@@ -46,7 +46,7 @@ class EstimatorClassifier(object):
         res = []
         try:
             # Open database connection
-            db = MySQLdb.connect(self.db_host, self.db_user, self.db_user_password, self.db_name)
+            db = MySQLdb.connect(self.db_host, self.db_user, self.db_user_password, self.db_name, charset='utf8')
             # prepare a cursor object using cursor() method
             cursor = db.cursor()
             df = sql.read_sql(EstimatorClassifier.SELECT_SQL, db)
