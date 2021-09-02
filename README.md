@@ -20,3 +20,11 @@ $ source env/bin/activate
 $ pip install -r requirements.txt
 
 ```` 
+
+## Publish
+```
+upgrade version at setup.py
+
+$ python setup.py sdist
+$ twine upload dist/*
+```

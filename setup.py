@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="openstack_member_spammer_estimator",
-    version="1.0.2",
+    version="1.0.3",
     author="Sebastian Marcet",
     author_email="smarcet@gmail.com",
     description="Member Spam detector",
